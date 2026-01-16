@@ -719,10 +719,10 @@
             for (var i = 0; i < cart.length; i++) {
                 var itemTotal = cart[i].price * cart[i].quantity;
                 message += (i + 1) + '. ' + cart[i].name + '\n';
-                message += '   Qty: ' + cart[i].quantity + ' × ' + cart[i].price.toFixed(2) + ' = ' + itemTotal.toFixed(2) + ' ' + translations.SAR + '\n\n';
+                message += '   Qty: ' + cart[i].quantity + ' × ' + cart[i].price.toFixed(2) + ' = ' + itemTotal.toFixed(2) + ' ' + translations.EG + '\n\n';
             }
             message += '--------------------------\n';
-            message += '*Total: ' + total.toFixed(2) + ' ' + translations.SAR + '*\n\nThank you for your order! 🙏';
+            message += '*Total: ' + total.toFixed(2) + ' ' + translations.EG + '*\n\nThank you for your order! 🙏';
             return message;
         }
 
@@ -731,7 +731,7 @@
                 showNotification(translations.cartEmptyFirst);
                 return;
             }
-            var phoneNumber = localStorage.getItem('whatsappNumber') || '01206744139';
+            var phoneNumber = localStorage.getItem('whatsappNumber') || '+201206744139';
             var message = createWhatsAppMessage(customerInfo);
             var encodedMessage = encodeURIComponent(message);
             var whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + encodedMessage;
