@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donut Shop - The Best Donuts in Town</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .app {
+            width: 1100px;
+            max-width: 95%;
+            margin: 20px auto;
+            background: #000;
+            border-radius: 18px;
+            padding: 40px 50px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, .6);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes shimmer {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            animation: slideIn 0.6s ease-out 0.2s backwards;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .logo:hover {
+            color: #f4a460;
+            transform: scale(1.05);
+        }
+        
+        nav {
+            margin-top: 30px;
+        }
+        
+        nav a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+            width: fit-content;
+        }
+        
+        nav a:hover {
+            color: #f4a460;
+            transform: translateX(10px);
+        }
+        
+        nav a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: #f4a460;
+            transition: 0.3s;
+        }
+        
+        nav a:hover::before {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: #f4a460;
+        }
+        
+        nav a.active::before {
+            width: 100%;
+        }
+        
+        .hero {
+            text-align: center;
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #fff, #f4a460, #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+        
+        .hero p {
+            color: #ccc;
+            font-size: 18px;
+        }
+        
+        .featured-image-container {
+            margin-top: 40px;
+            margin-bottom: 60px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.6s forwards;
+            position: relative;
+        }
+        
+        .featured-image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+            pointer-events: none;
+        }
+        
+        .featured-image {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .featured-image-container:hover .featured-image {
+            transform: scale(1.02);
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+        
+        .card {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+            cursor: pointer;
+            padding: 20px;
+            border-radius: 16px;
+            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        .card:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .card:nth-child(1) {
+            animation-delay: 0.8s;
+        }
+        
+        .card:nth-child(2) {
+            animation-delay: 1.0s;
+        }
+        
+        .card:nth-child(3) {
+            animation-delay: 1.2s;
+        }
+        
+        .card img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .6);
+            transition: all 0.4s ease;
+        }
+        
+        .card:hover img {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 30px 60px rgba(244, 164, 96, 0.3);
+        }
+        
+        .card h3 {
+            margin-top: 22px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: 0.3s;
+            color: #fff;
+        }
+        
+        .card:hover h3 {
+            color: #f4a460;
+        }
+        
+        .card p {
+            font-size: 13px;
+            color: #aaa;
+            margin-top: 8px;
+            line-height: 1.6;
+            padding: 0 10px;
+        }
+        
+        .add-btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #f4a460, #e8944d);
+            color: #000;
+            border: none;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            transform: translateY(0);
+        }
+        
+        .card:hover .add-btn {
+            opacity: 1;
+            box-shadow: 0 5px 20px rgba(244, 164, 96, 0.4);
+        }
+        
+        .add-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #e8944d, #f4a460);
+        }
+        
+        .cart-wrapper {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        .cart-icon {
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #000;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cart-icon:hover {
+            color: #f4a460;
+            transform: scale(1.1);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #f4a460, #e8944d);
+            color: #000;
+            font-size: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 2px solid #000;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: #666;
+            animation: fadeIn 0.8s ease-out 1.4s backwards;
+        }
+        
+        @media(max-width: 900px) {
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .card:nth-child(3) {
+                grid-column: span 2;
+                max-width: 50%;
+                margin: 0 auto;
+            }
+        }
+        
+        @media(max-width: 700px) {
+            .app {
+                padding: 30px 25px;
+            }
+            header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            nav {
+                display: flex;
+                gap: 20px;
+                justify-content: center;
+            }
+            nav a {
+                margin-bottom: 0;
+            }
+            .hero h1 {
+                font-size: 42px;
+            }
+            .featured-image {
+                max-height: 300px;
+            }
+            .products {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .card:nth-child(3) {
+                grid-column: span 1;
+                max-width: 100%;
+            }
+            .cart-wrapper {
+                top: 20px;
+                right: 20px;
+            }
+            .cart-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cart-wrapper">
+        <div class="cart-icon" onclick="openCartModal()">🛒</div>
+        <div class="cart-count">0</div>
+    </div>
+    <div class="app">
+        <header>
+            <a href="index.html" class="logo">🍩 DONUT LAOS</a>
+            <nav>
+                <a href="index.html" class="active">Home</a>
+                <a href="menu.html">Menu</a>
+                <a href="about.html">About</a>
+                <a href="reservations.html">Reservations</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </header>
+        <section class="hero">
+            <h1>DONUT</h1>
+            <p>The best donuts in town, elevated.</p>
+        </section>
+        <div class="featured-image-container">
+            <img src="https://i.postimg.cc/QNkJBxs3/image-jpg(1).jpg" alt="Delicious Donuts" class="featured-image">
+        </div>
+        <section class="products">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500" alt="Chocolate Glazed" />
+                <h3>Chocolate Glazed</h3>
+                <p>Belgian rich chocolate glaze with a creamy artisanal topping.</p>
+                <button class="add-btn" data-name="Chocolate Glazed" data-price="EG30.50">Add to Cart - EG30.50</button>
+            </div>
+            <div class="card">
+                <img src="https://i.postimg.cc/j5qR2PD5/Untitled.jpg" alt="Strawberry Frosted" />
+                <h3>Strawberry Frosted</h3>
+                <p>Real strawberry frosting finished with a delicate sugar dust.</p>
+                <button class="add-btn" data-name="Strawberry Frosted" data-price="EG30.50">Add to Cart - EG30.50</button>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=500" alt="Chocolate Drizzle" />
+                <h3>Noir Drizzle</h3>
+                <p>Classic fluffy donut draped in premium dark chocolate drizzle.</p>
+                <button class="add-btn" data-name="Noir Drizzle" data-price="EG40.00">Add to Cart - EG40.00</button>
+            </div>
+        </section>
+        <footer>© 2026 Donut Laos — An Elegant Experience 🍩</footer>
+    </div>
+
+
+</body>
+
+</html>

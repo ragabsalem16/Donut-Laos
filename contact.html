@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Donut Shop</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #111, #000);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .app {
+            max-width: 1100px;
+            margin: 30px auto;
+            background: #000;
+            border-radius: 18px;
+            padding: 40px 50px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s;
+        }
+        
+        .logo:hover {
+            color: #f4a460;
+        }
+        
+        nav {
+            margin-top: 20px;
+        }
+        
+        nav a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            color: #f4a460;
+            transform: translateX(8px);
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #fff, #f4a460, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            color: #ccc;
+            margin-top: 10px;
+        }
+        /* ================= MAP SECTION - PROMINENT ================= */
+        
+        .map-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .map-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .map-header h2 {
+            color: #f4a460;
+            font-size: 24px;
+        }
+        
+        .map-header .location-icon {
+            font-size: 28px;
+        }
+        
+        .map-container {
+            width: 100%;
+            height: 400px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(244, 164, 96, 0.3);
+            box-shadow: 0 10px 40px rgba(244, 164, 96, 0.15);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .address-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(244, 164, 96, 0.1);
+            border: 1px solid rgba(244, 164, 96, 0.2);
+            border-radius: 12px;
+        }
+        
+        .address-box .icon {
+            font-size: 30px;
+        }
+        
+        .address-box .text h4 {
+            color: #f4a460;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .address-box .text p {
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        /* ================= CONTACT CONTENT ================= */
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .contact-form,
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        
+        .contact-form h2 {
+            color: #f4a460;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        .form-group label {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 6px;
+            display: block;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #777;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #f4a460;
+            box-shadow: 0 0 15px rgba(244, 164, 96, 0.3);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #f4a460, #e8944d);
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 30px rgba(244, 164, 96, 0.45);
+        }
+        
+        .info-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-card-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .info-card-item h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #fff;
+            font-size: 18px;
+        }
+        
+        .info-card-item h3 span {
+            font-size: 24px;
+        }
+        
+        .info-card-item p {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.8;
+            padding-left: 34px;
+        }
+        
+        .hours-list {
+            list-style: none;
+            padding-left: 34px;
+        }
+        
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .hours-list li span {
+            color: #f4a460;
+        }
+        /* ================= CART ================= */
+        
+        .cart-wrapper {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 999;
+        }
+        
+        .cart-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            background: #f4a460;
+            color: #000;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+        }
+        
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            nav {
+                display: flex;
+                gap: 15px;
+            }
+            nav a {
+                margin: 0;
+            }
+            .hero h1 {
+                font-size: 40px;
+            }
+            .app {
+                padding: 30px 25px;
+            }
+            .map-container {
+                height: 300px;
+            }
+            .map-header h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CART -->
+    <div class="cart-wrapper">
+        <div class="cart-icon" onclick="openCartModal()">🛒</div>
+        <div class="cart-count">0</div>
+    </div>
+
+    <div class="app">
+
+        <header>
+            <a href="index.html" class="logo">🍩 DONUT LAOS</a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="menu.html">Menu</a>
+                <a href="about.html">About</a>
+                <a href="reservations.html">Reservations</a>
+                <a href="contact.html" class="active">Contact</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1>VISIT US</h1>
+            <p>Find our location and enjoy the best donuts in town</p>
+        </section>
+
+        <!-- PROMINENT MAP SECTION -->
+        <div class="map-section">
+            <div class="map-header">
+                <span class="location-icon">📍</span>
+                <h2>Our Restaurant Location</h2>
+            </div>
+
+            <div class="map-container">
+                <iframe src="https://maps.app.goo.gl/KAyX913jhTVcYL1C9" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+            <div class="address-box">
+                <span class="icon">🏪</span>
+                <div class="text">
+                    <h4>Donut Laos - Restaurant</h4>
+                    <p>Egypt , Alexandria, Borg El Arab, near Borg El Arab Technological University<br>Open daily from 8:00 AM to 10:00 PM</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-content">
+
+            <div class="contact-form">
+                <h2>Send us a Message</h2>
+
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input id="contactName" type="text" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input id="contactEmail" type="email" placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input id="contactPhone" type="tel" placeholder="Enter your phone">
+                </div>
+
+                <div class="form-group">
+                    <label>Message *</label>
+                    <textarea id="contactMessage" placeholder="Write your message..." rows="4"></textarea>
+                </div>
+
+                <button class="submit-btn" onclick="sendMessage()">📤 Send Message</button>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-item">
+                    <h3><span>📞</span> Contact Us</h3>
+                    <p>
+                        📱 Phone: +201206744139<br> 📧 Email: ragabsalem665@gmail.com<br> 💬 WhatsApp: +201206744139
+                    </p>
+                </div>
+
+                <div class="info-card-item">
+                    <h3><span>🕐</span> Opening Hours</h3>
+                    <ul class="hours-list">
+                        <li>Saturday - Thursday <span>8:00 AM - 10:00 PM</span></li>
+                        <li>Friday <span>2:00 PM - 11:00 PM</span></li>
+                    </ul>
+                </div>
+
+                <div class="info-card-item">
+                    <h3><span>🚗</span> How to Reach Us</h3>
+                    <p>
+                        🅿️ Free parking available<br> 📍 Located in city center<br> 🚌 Bus stop nearby
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            © 2026 Donut Laos — An Elegant Experience 🍩
+        </footer>
+
+    </div>
+
+    <script>
+        // Shopping Cart - Complete Inline Script
+        var cart = JSON.parse(localStorage.getItem('donutCart')) || [];
+        var cartCount = cart.reduce(function(sum, item) {
+            return sum + item.quantity;
+        }, 0);
+        var translations = {
+            addedToCart: 'Added to cart: ',
+            itemRemoved: 'Item removed from cart',
+            cartCleared: 'Cart cleared',
+            cartEmpty: 'Cart is empty',
+            cartEmptyDesc: 'Add some delicious items!',
+            total: 'Total',
+            added: 'Added!',
+            orderViaWhatsapp: 'Order via WhatsApp',
+            clearCart: 'Clear Cart',
+            customerInfo: 'Customer Information',
+            enterName: 'Please enter your name!',
+            cartEmptyFirst: 'Cart is empty! Add items first',
+            SAR: 'EG',
+            openingWhatsapp: 'Opening WhatsApp...',
+            youMayAlsoLike: 'You May Also Like!',
+            addToCartFromSuggest: 'Add'
+        };
+        var recommendedProducts = [{
+            name: 'Chocolate Donut',
+            price: 15,
+            image: 'https://images.unsplash.com/photo-1551024601-564d6d6744f0?w=100'
+        }, {
+            name: 'Strawberry Donut',
+            price: 15,
+            image: 'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=100'
+        }, {
+            name: 'Caramel Donut',
+            price: 18,
+            image: 'https://images.unsplash.com/photo-1612203985729-70726954388c?w=100'
+        }, {
+            name: 'Powdered Donut',
+            price: 12,
+            image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=100'
+        }, {
+            name: 'Latte Coffee',
+            price: 12,
+            image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=100'
+        }, {
+            name: 'Mint Tea',
+            price: 8,
+            image: 'https://images.unsplash.com/photo-1563911302283-d2bc129e7c1f?w=100'
+        }];
+
+        function updateCartCount() {
+            var elements = document.querySelectorAll('.cart-count');
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].textContent = cartCount;
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('donutCart', JSON.stringify(cart));
+            cartCount = cart.reduce(function(sum, item) {
+                return sum + item.quantity;
+            }, 0);
+            updateCartCount();
+        }
+
+        function addToCart(btn, name, price, image) {
+            var existingItem = null;
+            for (var i = 0; i < cart.length; i++) {
+                if (cart[i].name === name) {
+                    existingItem = cart[i];
+                    break;
+                }
+            }
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    image: image || '',
+                    quantity: 1
+                });
+            }
+            saveCart();
+            if (btn) {
+                btn.style.transform = 'scale(0.9)';
+                btn.textContent = translations.added;
+                btn.style.background = '#4CAF50';
+                setTimeout(function() {
+                    btn.style.transform = 'scale(1)';
+                    btn.textContent = 'Add to Cart';
+                    btn.style.background = 'linear-gradient(135deg, #f4a460, #e8944d)';
+                }, 1000);
+            }
+            showNotification(translations.addedToCart + name);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            renderCart();
+            showNotification(translations.itemRemoved);
+        }
+
+        function updateQuantity(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                removeFromCart(index);
+            } else {
+                saveCart();
+                renderCart();
+            }
+        }
+
+        function calculateTotal() {
+            var total = 0;
+            for (var i = 0; i < cart.length; i++) {
+                total += cart[i].price * cart[i].quantity;
+            }
+            return total;
+        }
+
+        function showNotification(message) {
+            var existing = document.querySelectorAll('.cart-notification');
+            for (var i = 0; i < existing.length; i++) {
+                existing[i].remove();
+            }
+            var notification = document.createElement('div');
+            notification.className = 'cart-notification';
+            notification.style.cssText = 'position:fixed;top:70px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#25D366,#128C7E);color:white;padding:15px 30px;border-radius:30px;font-weight:600;z-index:2000;font-family:Poppins,sans-serif;box-shadow:0 5px 20px rgba(37,211,102,0.4);animation:cartSlideDown 0.3s ease-out;';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(function() {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(-50%) translateY(-20px)';
+                notification.style.transition = 'all 0.3s ease';
+                setTimeout(function() {
+                    notification.remove();
+                }, 300);
+            }, 2500);
+        }
+
+        function renderCart() {
+            var container = document.getElementById('cartItems');
+            if (!container) return;
+            if (cart.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#888;"><span style="font-size:60px;">🛒</span><p style="margin-top:15px;font-size:18px;">' + translations.cartEmpty + '</p><p style="font-size:14px;margin-top:5px;">' + translations.cartEmptyDesc + '</p></div>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < cart.length; i++) {
+                var item = cart[i];
+                html += '<div style="display:flex;align-items:center;gap:15px;padding:15px;background:rgba(255,255,255,0.05);border-radius:15px;margin-bottom:10px;animation:cartFadeInUp 0.3s ease-out;">';
+                if (item.image) html += '<img src="' + item.image + '" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">';
+                html += '<div style="flex:1;text-align:left;"><h4 style="font-size:16px;margin-bottom:5px;">' + item.name + '</h4><p style="color:#f4a460;font-weight:600;">' + item.price.toFixed(2) + ' ' + translations.SAR + '</p></div>';
+                html += '<div style="display:flex;align-items:center;gap:10px;">';
+                html += '<button onclick="updateQuantity(' + i + ',-1)" style="width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,0.1);color:white;cursor:pointer;font-size:16px;transition:0.2s;">-</button>';
+                html += '<span style="font-weight:600;min-width:30px;text-align:center;">' + item.quantity + '</span>';
+                html += '<button onclick="updateQuantity(' + i + ',1)" style="width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,0.1);color:white;cursor:pointer;font-size:16px;transition:0.2s;">+</button>';
+                html += '</div>';
+                html += '<button onclick="removeFromCart(' + i + ')" style="width:35px;height:35px;border-radius:50%;border:none;background:#ff4757;color:white;cursor:pointer;font-size:14px;transition:0.2s;">✕</button>';
+                html += '</div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function renderSuggestions() {
+            var container = document.getElementById('suggestionsContainer');
+            if (!container) return;
+            var shuffled = recommendedProducts.slice().sort(function() {
+                return Math.random() - 0.5;
+            });
+            var suggestions = shuffled.slice(0, 3);
+            var html = '<div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);"><h4 style="font-size:14px;margin-bottom:15px;color:#f4a460;text-align:left;">✨ ' + translations.youMayAlsoLike + '</h4><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">';
+            for (var i = 0; i < suggestions.length; i++) {
+                var item = suggestions[i];
+                html += '<div onclick=\'addToCartFromSuggestion(' + JSON.stringify(item).replace(/'/g, "&#39;") + ',this)\' style="background:rgba(255,255,255,0.05);border-radius:12px;padding:10px;text-align:center;cursor:pointer;transition:0.3s;animation:cartFadeInUp 0.4s ease-out ' + (i * 0.1) + 's both;">';
+                html += '<img src="' + item.image + '" style="width:50px;height:50px;border-radius:50%;object-fit:cover;margin-bottom:8px;">';
+                html += '<p style="font-size:11px;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + item.name + '</p>';
+                html += '<p style="font-size:12px;color:#f4a460;font-weight:600;">' + item.price + ' ' + translations.SAR + '</p>';
+                html += '<button style="width:100%;margin-top:8px;padding:5px;border:none;border-radius:15px;background:linear-gradient(135deg,#f4a460,#e8944d);color:white;font-size:10px;cursor:pointer;transition:0.2s;">' + translations.addToCartFromSuggest + '</button>';
+                html += '</div>';
+            }
+            html += '</div></div>';
+            container.innerHTML = html;
+        }
+
+        function renderCartTotal() {
+            var totalEl = document.getElementById('cartTotal');
+            if (totalEl) {
+                var total = calculateTotal();
+                totalEl.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(244,164,96,0.1);border-radius:15px;"><span style="font-weight:600;">' + translations.total + ':</span><span style="font-size:24px;font-weight:700;color:#f4a460;">' + total.toFixed(2) + ' ' + translations.SAR + '</span></div>';
+            }
+        }
+
+        function openCartModal() {
+            var modal = document.getElementById('cartModal');
+            if (modal) {
+                renderCart();
+                renderCartTotal();
+                renderSuggestions();
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeCartModal() {
+            var modal = document.getElementById('cartModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function clearCart() {
+            cart = [];
+            saveCart();
+            renderCart();
+            renderCartTotal();
+            showNotification(translations.cartCleared);
+        }
+
+        function createWhatsAppMessage(customerInfo) {
+            var total = calculateTotal();
+            var message = '*New Order from Donut Shop 🍩*\n\n--------------------------\n';
+            if (customerInfo.name || customerInfo.phone) {
+                message += '*Customer Information*\n';
+                if (customerInfo.name) message += '- Name: ' + customerInfo.name + '\n';
+                if (customerInfo.phone) message += '- Phone: ' + customerInfo.phone + '\n';
+                if (customerInfo.address) message += '- Address: ' + customerInfo.address + '\n';
+                message += '\n--------------------------\n\n';
+            }
+            message += '*Items:*\n';
+            for (var i = 0; i < cart.length; i++) {
+                var itemTotal = cart[i].price * cart[i].quantity;
+                message += (i + 1) + '. ' + cart[i].name + '\n';
+                message += '   Qty: ' + cart[i].quantity + ' × ' + cart[i].price.toFixed(2) + ' = ' + itemTotal.toFixed(2) + ' ' + translations.SAR + '\n\n';
+            }
+            message += '--------------------------\n';
+            message += '*Total: ' + total.toFixed(2) + ' ' + translations.SAR + '*\n\nThank you for your order! 🙏';
+            return message;
+        }
+
+        function sendToWhatsApp(customerInfo) {
+            if (cart.length === 0) {
+                showNotification(translations.cartEmptyFirst);
+                return;
+            }
+            var phoneNumber = localStorage.getItem('whatsappNumber') || '01206744139';
+            var message = createWhatsAppMessage(customerInfo);
+            var encodedMessage = encodeURIComponent(message);
+            var whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + encodedMessage;
+            window.open(whatsappUrl, '_blank');
+            showNotification(translations.openingWhatsapp);
+        }
+
+        function showCustomerForm() {
+            var modal = document.getElementById('customerFormModal');
+            if (modal) {
+                closeCartModal();
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeCustomerForm() {
+            var modal = document.getElementById('customerFormModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function submitOrderWithCustomer() {
+            var nameInput = document.getElementById('customerName');
+            var phoneInput = document.getElementById('customerPhone');
+            var addressInput = document.getElementById('customerAddress');
+            var name = nameInput ? nameInput.value.trim() : '';
+            var phone = phoneInput ? phoneInput.value.trim() : '';
+            var address = addressInput ? addressInput.value.trim() : '';
+            if (!name) {
+                showNotification(translations.enterName);
+                return;
+            }
+            var customerInfo = {
+                name: name,
+                phone: phone,
+                address: address
+            };
+            sendToWhatsApp(customerInfo);
+            closeCustomerForm();
+        }
+
+        function addToCartFromSuggestion(item, btn) {
+            addToCart(btn, item.name, item.price, item.image);
+        }
+
+        function sendMessage() {
+            var name = document.getElementById("contactName").value.trim();
+            var msg = document.getElementById("contactMessage").value.trim();
+            if (!name || !msg) {
+                showNotification("Please fill required fields");
+                return;
+            }
+            var text = "🍩 New Message\nName: " + name + "\nMessage: " + msg;
+            window.open("https://wa.me/01206744139?text=" + encodeURIComponent(text), "_blank");
+            showNotification("Opening WhatsApp...");
+        }
+
+        // CSS Animations
+        var style = document.createElement('style');
+        style.textContent = '@keyframes cartSlideDown{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}@keyframes cartFadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}';
+        document.head.appendChild(style);
+
+        // Modal Styles
+        var modalStyle = document.createElement('style');
+        modalStyle.id = 'cart-modal-styles';
+        modalStyle.textContent = '.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:2000;justify-content:center;align-items:center}.modal-content{background:linear-gradient(135deg,#1a1a1a,#0a0a0a);border-radius:20px;padding:30px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;border:1px solid rgba(255,255,255,0.1);position:relative}.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid rgba(255,255,255,0.1)}.modal-title{font-size:24px;font-weight:700}.modal-close{width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,0.1);color:white;cursor:pointer;font-size:20px;transition:0.3s}.modal-close:hover{background:rgba(255,255,255,0.2)}.modal-buttons{display:flex;gap:10px;margin-top:20px}';
+        document.head.appendChild(modalStyle);
+
+        // Inject Modals
+        function injectModals() {
+            if (document.getElementById('cartModal')) return;
+            var modalsHTML = '<div id="cartModal" class="modal-overlay"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Shopping Cart</h2><button class="modal-close" onclick="closeCartModal()">✕</button></div><div id="cartItems"></div><div id="cartTotal" style="margin-top:20px;"></div><div id="suggestionsContainer"></div><div class="modal-buttons"><button class="btn-clear" onclick="clearCart()" style="flex:1;padding:15px;background:rgba(255,71,87,0.2);border:1px solid #ff4757;color:#ff4757;border-radius:10px;cursor:pointer;font-family:Poppins,sans-serif;font-weight:600;transition:0.3s;">Clear Cart</button><button class="btn-order" onclick="showCustomerForm()" style="flex:2;padding:15px;background:linear-gradient(135deg,#25D366,#128C7E);border:none;color:white;border-radius:10px;cursor:pointer;font-family:Poppins,sans-serif;font-weight:600;font-size:16px;transition:0.3s;">Order via WhatsApp</button></div></div></div><div id="customerFormModal" class="modal-overlay"><div class="modal-content" style="max-width:450px;"><div class="modal-header"><h2 class="modal-title">Customer Information</h2><button class="modal-close" onclick="closeCustomerForm()">✕</button></div><div class="form-group"><label>Name *</label><input type="text" id="customerName" placeholder="Enter your name"></div><div class="form-group"><label>Phone Number</label><input type="tel" id="customerPhone" placeholder="Enter your phone"></div><div class="form-group"><label>Address (optional)</label><textarea id="customerAddress" placeholder="Enter your address"></textarea></div><button class="btn-whatsapp" onclick="submitOrderWithCustomer()" style="width:100%;padding:15px;background:linear-gradient(135deg,#25D366,#128C7E);border:none;color:white;border-radius:10px;cursor:pointer;font-family:Poppins,sans-serif;font-weight:600;font-size:16px;transition:0.3s;">Send Order to WhatsApp</button></div></div>';
+            document.body.insertAdjacentHTML('beforeend', modalsHTML);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            injectModals();
+            var cartModal = document.getElementById('cartModal');
+            var customerModal = document.getElementById('customerFormModal');
+            if (cartModal) cartModal.addEventListener('click', function(e) {
+                if (e.target === cartModal) closeCartModal();
+            });
+            if (customerModal) customerModal.addEventListener('click', function(e) {
+                if (e.target === customerModal) closeCustomerForm();
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeCartModal();
+                    closeCustomerForm();
+                }
+            });
+        });
+
+        // Export functions
+        window.addToCart = addToCart;
+        window.removeFromCart = removeFromCart;
+        window.updateQuantity = updateQuantity;
+        window.openCartModal = openCartModal;
+        window.closeCartModal = closeCartModal;
+        window.clearCart = clearCart;
+        window.sendToWhatsApp = sendToWhatsApp;
+        window.showCustomerForm = showCustomerForm;
+        window.closeCustomerForm = closeCustomerForm;
+        window.submitOrderWithCustomer = submitOrderWithCustomer;
+        window.calculateTotal = calculateTotal;
+        window.addToCartFromSuggestion = addToCartFromSuggestion;
+        window.sendMessage = sendMessage;
+    </script>
+
+</body>
+
+</html>

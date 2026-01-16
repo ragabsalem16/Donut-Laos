@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reservations - Donut Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Reset & Basic Styles --- */
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        /* --- Main Container --- */
+        
+        .app {
+            width: 1100px;
+            max-width: 95%;
+            margin: 20px auto;
+            background: #000;
+            border-radius: 18px;
+            padding: 40px 50px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, .6);
+            animation: fadeIn 0.8s ease-out;
+        }
+        /* --- Animations --- */
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes shimmer {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+        /* --- Header & Nav --- */
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            animation: slideIn 0.6s ease-out 0.2s backwards;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .logo:hover {
+            color: #f4a460;
+            transform: scale(1.05);
+        }
+        
+        nav {
+            margin-top: 30px;
+        }
+        
+        nav a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+            width: fit-content;
+        }
+        
+        nav a:hover {
+            color: #f4a460;
+            transform: translateX(10px);
+        }
+        
+        nav a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: #f4a460;
+            transition: 0.3s;
+        }
+        
+        nav a:hover::before {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: #f4a460;
+        }
+        
+        nav a.active::before {
+            width: 100%;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: none;
+        }
+        /* --- Hero Section --- */
+        
+        .hero {
+            text-align: center;
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #fff, #f4a460, #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+        
+        .hero p {
+            color: #ccc;
+            font-size: 18px;
+        }
+        /* --- Reservation Section --- */
+        
+        .reservation-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        @media(max-width: 900px) {
+            .reservation-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .form-section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #f4a460;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .form-group label span {
+            color: #f4a460;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #f4a460;
+            box-shadow: 0 0 20px rgba(244, 164, 96, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        /* --- Rings Selection --- */
+        
+        .rings-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .rings-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .ring-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .ring-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .ring-info {
+            flex: 1;
+        }
+        
+        .ring-info h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .ring-info p {
+            color: #f4a460;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quantity-control button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .quantity-control button:hover {
+            background: #f4a460;
+            color: #000;
+            border-color: #f4a460;
+        }
+        
+        .quantity-control input {
+            width: 50px;
+            text-align: center;
+            padding: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        /* --- Total & Submit --- */
+        
+        .total-section {
+            background: rgba(244, 164, 96, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .total-section .total {
+            font-size: 32px;
+            font-weight: 700;
+            color: #f4a460;
+        }
+        
+        .total-section .total span {
+            font-size: 16px;
+            color: #aaa;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #f4a460, #e8944d);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(244, 164, 96, 0.4);
+        }
+        /* --- Info Section --- */
+        
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .info-card h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card h3 span {
+            font-size: 24px;
+        }
+        
+        .info-card p {
+            color: #aaa;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        
+        .feature-item span {
+            font-size: 18px;
+        }
+        
+        .feature-item p {
+            font-size: 13px;
+            margin: 0;
+        }
+        /* --- Cart Icon --- */
+        
+        .cart-wrapper {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        .cart-icon {
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #000;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cart-icon:hover {
+            color: #f4a460;
+            transform: scale(1.1);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #f4a460, #e8944d);
+            color: #000;
+            font-size: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 2px solid #000;
+        }
+        /* --- Footer --- */
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: #666;
+        }
+        /* --- Responsive Design --- */
+        
+        @media(max-width: 700px) {
+            .app {
+                padding: 30px 25px;
+            }
+            header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            nav {
+                display: flex;
+                gap: 20px;
+                justify-content: center;
+            }
+            nav a {
+                margin-bottom: 0;
+            }
+            .hero h1 {
+                font-size: 42px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .cart-wrapper {
+                top: 20px;
+                right: 20px;
+            }
+            .cart-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cart-wrapper">
+        <div class="cart-icon" onclick="openCartModal()">🛒</div>
+        <div class="cart-count">0</div>
+    </div>
+
+    <div class="app">
+        <header>
+            <a href="index.html" class="logo">🍩 DONUT LAOS</a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="menu.html">Menu</a>
+                <a href="about.html">About</a>
+                <a href="reservations.html" class="active">Reservations</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1>RESERVATIONS</h1>
+            <p>Reserve your donut rings in advance</p>
+        </section>
+
+        <div class="reservation-container">
+            <div class="form-section">
+                <h2>🍩 Ring Reservation</h2>
+
+                <div class="form-group">
+                    <label>Customer Name <span>*</span></label>
+                    <input type="text" id="customerName" placeholder="Enter your name" title="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="customerPhone" placeholder="Enter your phone" title="Enter your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label>Reservation Date <span>*</span></label>
+                    <input type="date" id="reservationDate" title="Select reservation date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Pickup Time <span>*</span></label>
+                    <select id="pickupTime" title="Select pickup time" required>
+                        <option value="">Select time</option>
+                        <option value="08:00">08:00 AM</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                        <option value="18:00">06:00 PM</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Special Requests</label>
+                    <textarea id="specialRequests" placeholder="Any special requests..."></textarea>
+                </div>
+
+                <div class="rings-section">
+                    <h3>🍩 Select Rings & Quantities</h3>
+                    <div id="ringsContainer">
+                        <!-- Ring items will be rendered here -->
+                    </div>
+                </div>
+
+                <div class="total-section">
+                    <div class="total"><span id="totalAmount">0.00</span> <span>EG</span></div>
+                </div>
+
+                <button class="submit-btn" onclick="submitReservation()">📱 Send via WhatsApp</button>
+            </div>
+
+            <div class="info-section">
+                <div class="info-card">
+                    <h3><span>📋</span> How It Works</h3>
+                    <p>1. Select your preferred donut rings and quantities<br>2. Choose your reservation date and pickup time<br>3. Fill in your contact information<br>4. Click send to complete via WhatsApp</p>
+                    <div class="features-grid">
+                        <div class="feature-item"><span>✅</span>
+                            <p>Fresh daily</p>
+                        </div>
+                        <div class="feature-item"><span>🚚</span>
+                            <p>Quick pickup</p>
+                        </div>
+                        <div class="feature-item"><span>💰</span>
+                            <p>Pay on pickup</p>
+                        </div>
+                        <div class="feature-item"><span>🎁</span>
+                            <p>Special packaging</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3><span>📞</span> Contact Us</h3>
+                    <p>📞 Phone: +201206744139<br>📍 Location: Egypt , Alexandria, Borg El Arab, near Borg El Arab Technological University<br>🕐 Hours: 8:00 AM - 8:00 PM</p>
+                </div>
+
+                <div class="info-card">
+                    <h3><span>💡</span> Tips</h3>
+                    <p>• Reserve 24h in advance for large orders<br>• Weekend orders fill quickly<br>• Special events need 48h notice</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>© 2026 Donut Laos — An Elegant Experience 🍩</footer>
+    </div>
+
+    <script>
+        // Ring products data
+        const ringProducts = [{
+            id: 1,
+            name: 'Classic Ring',
+            price: 12,
+            image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=100'
+        }, {
+            id: 2,
+            name: 'Chocolate Ring',
+            price: 15,
+            image: 'https://images.unsplash.com/photo-1527515545081-5db817172677?w=100'
+        }, {
+            id: 3,
+            name: 'Strawberry Ring',
+            price: 15,
+            image: 'https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=100'
+        }, {
+            id: 4,
+            name: 'Glazed Ring',
+            price: 10,
+            image: 'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=100'
+        }, {
+            id: 5,
+            name: 'Caramel Ring',
+            price: 18,
+            image: 'https://images.unsplash.com/photo-1612203985729-70726954388c?w=100'
+        }, {
+            id: 6,
+            name: 'Sprinkles Ring',
+            price: 14,
+            image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=100'
+        }];
+
+        // Selected rings storage
+        let selectedRings = {};
+        ringProducts.forEach(ring => {
+            selectedRings[ring.id] = 0;
+        });
+
+        // Set minimum date
+        const dateInput = document.getElementById('reservationDate');
+        if (dateInput) {
+            dateInput.min = new Date().toISOString().split('T')[0];
+        }
+
+        // Render ring items
+        function renderRings() {
+            const container = document.getElementById('ringsContainer');
+            if (!container) return;
+
+            container.innerHTML = ringProducts.map(ring => `
+                <div class="ring-item">
+                    <img src="${ring.image}" alt="${ring.name}">
+                    <div class="ring-info">
+                        <h4>${ring.name}</h4>
+                        <p>${ring.price} SAR</p>
+                    </div>
+                    <div class="quantity-control">
+                        <button onclick="updateRingQuantity(${ring.id}, -1)">−</button>
+                        <input type="number" id="ring-qty-${ring.id}" value="0" min="0" max="99" readonly>
+                        <button onclick="updateRingQuantity(${ring.id}, 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update ring quantity
+        function updateRingQuantity(ringId, change) {
+            const input = document.getElementById('ring-qty-' + ringId);
+            if (!input) return;
+
+            let currentQty = selectedRings[ringId] || 0;
+            currentQty += change;
+
+            if (currentQty < 0) currentQty = 0;
+            if (currentQty > 99) currentQty = 99;
+
+            selectedRings[ringId] = currentQty;
+            input.value = currentQty;
+
+            calculateTotal();
+        }
+
+        // Calculate total
+        function calculateTotal() {
+            let total = 0;
+            ringProducts.forEach(ring => {
+                const qty = selectedRings[ring.id] || 0;
+                total += qty * ring.price;
+            });
+
+            const totalElement = document.getElementById('totalAmount');
+            if (totalElement) {
+                totalElement.textContent = total.toFixed(2);
+            }
+        }
+
+        // Get selected items summary
+        function getSelectedItemsSummary() {
+            const items = [];
+            ringProducts.forEach(ring => {
+                const qty = selectedRings[ring.id] || 0;
+                if (qty > 0) {
+                    items.push({
+                        name: ring.name,
+                        quantity: qty,
+                        price: ring.price,
+                        subtotal: qty * ring.price
+                    });
+                }
+            });
+            return items;
+        }
+
+        // Submit reservation
+        function submitReservation() {
+            const nameInput = document.getElementById('customerName');
+            const phoneInput = document.getElementById('customerPhone');
+            const dateInput = document.getElementById('reservationDate');
+            const timeInput = document.getElementById('pickupTime');
+            const notesInput = document.getElementById('specialRequests');
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const phone = phoneInput ? phoneInput.value.trim() : '';
+            const date = dateInput ? dateInput.value : '';
+            const time = timeInput ? timeInput.value : '';
+            const notes = notesInput ? notesInput.value.trim() : '';
+
+            if (!name) {
+                showNotification('Please enter your name!');
+                return;
+            }
+            if (!date || !time) {
+                showNotification('Please select date and time!');
+                return;
+            }
+
+            const selectedItems = getSelectedItemsSummary();
+            if (selectedItems.length === 0) {
+                showNotification('Please select at least one ring!');
+                return;
+            }
+
+            const total = parseFloat(document.getElementById('totalAmount').textContent) || 0;
+
+            let message = '🍩 *NEW RESERVATION - Donut Shop*\n\n';
+            message += '━━━━━━━━━━━━━━━━━━━━\n';
+            message += '📋 *Customer Details*\n';
+            message += '👤 Name: ' + name + '\n';
+            if (phone) message += '📞 Phone: ' + phone + '\n';
+            message += '📅 Date: ' + date + '\n';
+            message += '🕐 Time: ' + time + '\n';
+            if (notes) message += '📝 Notes: ' + notes + '\n\n';
+            message += '━━━━━━━━━━━━━━━━━━━━\n';
+            message += '🍩 *Reserved Items:*\n';
+
+            selectedItems.forEach((item, index) => {
+                message += '\n' + (index + 1) + '. ' + item.name;
+                message += '\n  Qty: ' + item.quantity + ' × ' + item.price + ' EG = ' + item.subtotal + ' EG';
+            });
+
+            message += '\n\n━━━━━━━━━━━━━━━━━━━━\n';
+            message += '💰 *Estimated Total: ' + total.toFixed(2) + ' EG*\n';
+            message += '━━━━━━━━━━━━━━━━━━━━\n\n';
+            message += 'Thank you for your reservation! 🙏';
+
+            const phoneNumber = localStorage.getItem('whatsappNumber') || '01206744139';
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = 'https://wa.me/' + phoneNumber + '?text=' + encodedMessage;
+
+            window.open(whatsappUrl, '_blank');
+            showNotification('Opening WhatsApp...');
+        }
+
+        // Page-specific initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            renderRings();
+        });
+    </script>
+</body>
+
+</html>
